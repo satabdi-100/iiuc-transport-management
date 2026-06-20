@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IIUC Transport Management System</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+<div id="login-screen" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; align-items:center; justify-content:center; overflow:hidden;">
+  
+  <!-- Animated Background -->
+  <div style="position:absolute; width:100%; height:100%; background: linear-gradient(135deg, #088415, #073938, #048e40); z-index:0;"></div>
+  
+  <!-- Floating Buses Animation -->
+  <div style="position:absolute; width:100%; height:100%; z-index:1; overflow:hidden;">
+    <div class="float-bus" style="top:10%; left:-5%; animation-delay:0s;"><i class="fa-solid fa-bus-side"></i></div>
+    <div class="float-bus" style="top:30%; left:-5%; animation-delay:2s;"><i class="fa-solid fa-bus-side"></i></div>
+    <div class="float-bus" style="top:55%; left:-5%; animation-delay:4s;"><i class="fa-solid fa-bus-side"></i></div>
+    <div class="float-bus" style="top:75%; left:-5%; animation-delay:1s;"><i class="fa-solid fa-bus-side"></i></div>
+    <div class="float-bus" style="top:88%; left:-5%; animation-delay:3s;"><i class="fa-solid fa-bus-side"></i></div>
+  </div>
+
+  <!-- Glowing Circles -->
+  <div style="position:absolute; width:400px; height:400px; background:rgba(99,102,241,0.15); border-radius:50%; top:-100px; right:-100px; z-index:1; filter:blur(60px);"></div>
+  <div style="position:absolute; width:300px; height:300px; background:rgba(59,130,246,0.15); border-radius:50%; bottom:-80px; left:-80px; z-index:1; filter:blur(60px);"></div>
+
+  <!-- Login Card -->
+  <div style="position:relative; z-index:2; background:rgba(255,255,255,0.07); backdrop-filter:blur(20px); padding:48px 40px; border-radius:20px; text-align:center; width:360px; border:1px solid rgba(255,255,255,0.15); box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+    
+    <!-- Logo & Title -->
+    <div style="width:90px; height:90px; margin:0 auto 16px; border-radius:50%; background:#fff; border:2px solid rgba(255,255,255,0.25); overflow:hidden; display:flex; align-items:center; justify-content:center;">
+  <img src="photo/logo_photo.png" alt="IIUC Logo" style="width:100%; height:100%; object-fit:cover; object-position:center;" />
+</div>
+<h2 style="color:#fff; font-size:22px; margin-bottom:6px; font-weight:700;">IIUC Transport System</h2>
+<p style="color:rgba(255,255,255,0.5); font-size:13px; margin-bottom:28px;">International Islamic University Chittagong</p>
+    <!-- Password Input -->
+    <div style="position:relative; margin-bottom:16px;">
+      <input type="password" id="admin-password-input" placeholder="Admin Password" 
+        style="width:100%; padding:13px 16px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:10px; color:#fff; font-size:14px; box-sizing:border-box; outline:none;"
+        onkeydown="if(event.key==='Enter') loginAsAdmin()"
+      />
+    </div>
+
+    <!-- Admin Button -->
+    <button onclick="loginAsAdmin()" 
+      style="width:100%; padding:13px; background:linear-gradient(135deg,#6366f1,#2563eb); color:#fff; border:none; border-radius:10px; margin-bottom:10px; cursor:pointer; font-size:15px; font-weight:600; letter-spacing:0.5px; box-shadow:0 4px 15px rgba(99,102,241,0.4);">
+       Login as Admin
+    </button>
+
+    <!-- User Button -->
+    <button onclick="loginAsUser()" 
+      style="width:100%; padding:13px; background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; cursor:pointer; font-size:15px; font-weight:500;">
+       Continue as User
+    </button>
+
+    <!-- Error -->
+    <p id="login-error" style="color:#f87171; margin-top:12px; font-size:13px; display:none;"> Wrong password! Try again.</p>
+
+    <!-- Footer -->
+    <p style="color:rgba(255,255,255,0.25); font-size:11px; margin-top:24px;">© 2026 IIUC Transport Management</p>
+  </div>
+</div>
+  
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <div class="logo-badge"><img src="photo/logo_photo.png" alt="" srcset=""></div>
+        <div>
+          <h1 class="site-title">Transport Management System</h1>
+          <p class="site-sub">International Islamic University Chittagong</p>
+        </div>
+      </div>
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-btn" data-tab="buses">Buses</button>
+        <button class="tab-btn" data-tab="routes">Routes</button>
+        <button class="tab-btn" data-tab="schedules">Schedules</button>
+        <button class="tab-btn" data-tab="drivers">Drivers</button>
+      </nav>
+    </div>
+  </header>
+  <div class="marquee-bar">
+  <div class="marquee-track">
+    <span><i class="fa-solid fa-bus-side"></i>All Route For Female</span>
+    <span><i class="fa-regular fa-clock"></i> 7:00 AM Departure All Female Bus Towards Versity</span>
+    <span><i class="fa-regular fa-clock"></i> 9:00 AM Departure All Male Bus Towards Versity</span>
+      <span><i class="fa-regular fa-clock"></i> 1:40 AM Departure From Versity All Route</span>
+    <span><i class="fa-solid fa-location-dot"></i> Bariarhut Route</span>
+    <span><i class="fa-regular fa-clock"></i> 8:55 AM Departure All Male Bus</span>
+    <span><i class="fa-solid fa-location-dot"></i> Muradpur Route</span>
+     <span><i class="fa-regular fa-clock"></i> 1:40 AM Departure From Versity All Route</span>
+    <span><i class="fa-regular fa-clock"></i> 9:00 AM Departure All Male Bus</span>
+    <span><i class="fa-solid fa-bus-side"></i> Agrabad Route</span>
+    <span><i class="fa-solid fa-location-dot"></i> Oxygen Route</span>
+    <span><i class="fa-regular fa-clock"></i> 7:00 AM Departure All Female Bus </span>
+    <span><i class="fa-solid fa-location-dot"></i> Hathazari Route</span>
+    <span><i class="fa-regular fa-clock"></i> 8:00 AM Departure</span>
+    <span><i class="fa-solid fa-bus-side"></i> ALL Route For Male </span>
+    <span><i class="fa-solid fa-location-dot"></i> Muradpur Route</span>
+    <span><i class="fa-regular fa-clock"></i> 9:00 AM Departure All Male Bus Towards Versity</span>
+    <span><i class="fa-regular fa-clock"></i> 1:40 AM Departure From Versity All Route</span>
+  </div>
+</div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ======================== DASHBOARD ======================== -->
+    <section id="tab-dashboard" class="tab-section active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Buses</span>
+          <span class="stat-value" id="stat-buses">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Active Routes</span>
+          <span class="stat-value" id="stat-routes">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Schedules</span>
+          <span class="stat-value" id="stat-schedules">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Drivers</span>
+          <span class="stat-value" id="stat-drivers">0</span>
+        </div>
+      </div>
+
+      <div class="dashboard-tables">
+        <div class="dash-table-card">
+          <h3 class="card-title">Recent Buses</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>Bus No.</th><th>Capacity</th><th>Semester</th></tr>
+            </thead>
+            <tbody id="dash-buses-tbody">
+              <tr><td colspan="3" class="empty-row">No buses added yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="dash-table-card">
+          <h3 class="card-title">Recent Schedules</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>Route</th><th>Time</th><th>Driver</th></tr>
+            </thead>
+            <tbody id="dash-schedules-tbody">
+              <tr><td colspan="3" class="empty-row">No schedules added yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================== BUSES ======================== -->
+    <section id="tab-buses" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">Bus Management</h2>
+        <button class="btn-primary" onclick="openModal('bus-modal')">+ Add Bus</button>
+      </div>
+      <table class="data-table full-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Bus Number</th><th>Capacity</th><th>Semester</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="buses-tbody">
+          <tr><td colspan="5" class="empty-row">No buses added yet</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ======================== ROUTES ======================== -->
+    <section id="tab-routes" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">Route Management</h2>
+        <button class="btn-primary" onclick="openModal('route-modal')">+ Add Route</button>
+      </div>
+      <table class="data-table full-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Route Name</th><th>Bus No.</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="routes-tbody">
+          <tr><td colspan="4" class="empty-row">No routes added yet</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ======================== SCHEDULES ======================== -->
+    <section id="tab-schedules" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">Schedule Management</h2>
+        <button class="btn-primary" onclick="openModal('schedule-modal')">+ Add Schedule</button>
+      </div>
+      <table class="data-table full-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Route</th><th>Schedule Time</th><th>Driver</th><th>Bus No.</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="schedules-tbody">
+          <tr><td colspan="6" class="empty-row">No schedules added yet</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ======================== DRIVERS ======================== -->
+    <section id="tab-drivers" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">Driver Management</h2>
+        <button class="btn-primary" onclick="openModal('driver-modal')">+ Add Driver</button>
+      </div>
+      <table class="data-table full-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Driver Name</th><th>Assigned Bus</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="drivers-tbody">
+          <tr><td colspan="4" class="empty-row">No drivers added yet</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ======================== MODALS ======================== -->
+
+  <!-- BUS MODAL -->
+  <div id="bus-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="bus-modal-title">Add New Bus</h3>
+        <button class="modal-close" onclick="closeModal('bus-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="bus-edit-id" />
+        <div class="form-group">
+          <label>Bus Number</label>
+          <input type="text" id="bus-number" placeholder="e.g. CTG-1234" />
+        </div>
+        <div class="form-group">
+          <label>Capacity</label>
+          <input type="number" id="bus-capacity" placeholder="e.g. 40" />
+        </div>
+        <div class="form-group">
+          <label>Semester</label>
+          <input type="text" id="bus-semester" placeholder="e.g. Autumn 2025" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('bus-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveBus()">Save Bus</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROUTE MODAL -->
+  <div id="route-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="route-modal-title">Add New Route</h3>
+        <button class="modal-close" onclick="closeModal('route-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="route-edit-id" />
+        <div class="form-group">
+          <label>Route Name</label>
+          <input type="text" id="route-name" placeholder="e.g. Agrabad Route" />
+        </div>
+        <div class="form-group">
+          <label>Bus Number</label>
+          <input type="text" id="route-bus" placeholder="e.g. CTG-1234" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('route-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveRoute()">Save Route</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE MODAL -->
+  <div id="schedule-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="schedule-modal-title">Add New Schedule</h3>
+        <button class="modal-close" onclick="closeModal('schedule-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="schedule-edit-id" />
+        <div class="form-group">
+          <label>Route Name</label>
+          <input type="text" id="schedule-route" placeholder="e.g. Agrabad Route" />
+        </div>
+        <div class="form-group">
+          <label>Schedule Time</label>
+          <input type="text" id="schedule-time" placeholder="e.g. 7:30 AM" />
+        </div>
+        <div class="form-group">
+          <label>Driver Name</label>
+          <input type="text" id="schedule-driver" placeholder="e.g. Rahim" />
+        </div>
+        <div class="form-group">
+          <label>Bus Number</label>
+          <input type="text" id="schedule-bus" placeholder="e.g. CTG-1234" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('schedule-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveSchedule()">Save Schedule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRIVER MODAL -->
+  <div id="driver-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="driver-modal-title">Add New Driver</h3>
+        <button class="modal-close" onclick="closeModal('driver-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="driver-edit-id" />
+        <div class="form-group">
+          <label>Driver Name</label>
+          <input type="text" id="driver-name" placeholder="e.g. Rahim" />
+        </div>
+        <div class="form-group">
+          <label>Assigned Bus</label>
+          <input type="text" id="driver-bus" placeholder="e.g. CTG-1234" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('driver-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveDriver()">Save Driver</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
