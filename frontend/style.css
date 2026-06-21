@@ -1,32 +1,33 @@
-
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --green-dark:   #045905f6;
-  --green-mid:    #225e3f;
-  --green-light:  #e8f4ed;
-  --gold:         #040081;
-  --gold-light:   #fdf5dc;
-  --gold-dark:    #b3bc07;
-  --white:        #ffffff;
-  --gray-50:      #f8f9fa;
-  --gray-100:     #f1f3f5;
-  --gray-200:     #e9ecef;
-  --gray-400:     #adb5bd;
-  --gray-600:     #6c757d;
-  --gray-800:     #343a40;
-  --danger:       #c0392b;
+  --green-dark: #045905f6;
+  --green-mid: #225e3f;
+  --green-light: #e8f4ed;
+  --gold: #040081;
+  --gold-light: #fdf5dc;
+  --gold-dark: #b3bc07;
+  --white: #ffffff;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-400: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-800: #343a40;
+  --danger: #c0392b;
   --danger-light: #fdecea;
-  --radius-sm:    6px;
-  --radius-md:    10px;
-  --radius-lg:    14px;
-  --shadow-sm:    0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md:    0 4px 16px rgba(0,0,0,0.12);
-  --transition:   all 0.2s ease;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --transition: all 0.2s ease;
 }
 
 body {
@@ -49,10 +50,23 @@ body {
 }
 
 @keyframes floatAcross {
-  0%   { transform: translateX(0); opacity: 0; }
-  10%  { opacity: 0.3; }
-  90%  { opacity: 0.3; }
-  100% { transform: translateX(110vw); opacity: 0; }
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.3;
+  }
+
+  90% {
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateX(110vw);
+    opacity: 0;
+  }
 }
 
 .site-header {
@@ -176,13 +190,27 @@ body {
 }
 
 @keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-20px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .marquee-bar {
@@ -218,8 +246,13 @@ body {
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .main-content {
@@ -238,8 +271,15 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .stats-grid {
@@ -380,7 +420,7 @@ body {
 .btn-primary:hover {
   background: var(--green-mid);
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(26,71,49,0.3);
+  box-shadow: 0 3px 10px rgba(26, 71, 49, 0.3);
 }
 
 .btn-secondary {
@@ -449,7 +489,7 @@ body {
 .modal-box {
   background: var(--white);
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   width: 100%;
   max-width: 480px;
   overflow: hidden;
@@ -472,7 +512,7 @@ body {
 .modal-close {
   background: none;
   border: none;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 24px;
   cursor: pointer;
   line-height: 1;
@@ -525,7 +565,7 @@ body {
 .form-group input:focus {
   border-color: var(--green-dark);
   background: var(--white);
-  box-shadow: 0 0 0 3px rgba(26,71,49,0.1);
+  box-shadow: 0 0 0 3px rgba(26, 71, 49, 0.1);
 }
 
 .form-group input::placeholder {
@@ -565,14 +605,17 @@ body {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .dashboard-tables {
     grid-template-columns: 1fr;
   }
+
   .header-inner {
     flex-direction: column;
     padding: 1rem 1.5rem;
     gap: 1rem;
   }
+
   .tab-nav {
     flex-wrap: wrap;
     justify-content: center;
@@ -583,9 +626,11 @@ body {
   .stats-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .main-content {
     padding: 1rem;
   }
+
   .data-table th,
   .data-table td {
     padding: 8px 10px;
