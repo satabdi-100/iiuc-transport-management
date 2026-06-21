@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:8080/api';
 
-// ========== LOGIN SYSTEM ==========
+
 const ADMIN_PASSWORD = 'iiuc123';
 let isAdmin = false;
 
@@ -40,7 +40,7 @@ function setUserMode() {
   document.querySelectorAll('.btn-primary').forEach(btn => btn.style.display = 'none');
 }
 
-// ========== TABS ==========
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -50,7 +50,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ========== MODALS ==========
+
 function openModal(id) { document.getElementById(id).style.display = 'flex'; }
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
@@ -60,7 +60,7 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
   });
 });
 
-// ========== TOAST ==========
+
 function showToast(msg, isError = false) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
@@ -69,7 +69,7 @@ function showToast(msg, isError = false) {
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ========== STATS ==========
+
 async function updateStats() {
   try {
     const [busRes, routeRes, schedRes, driverRes] = await Promise.all([
@@ -86,7 +86,7 @@ async function updateStats() {
     document.getElementById('stat-schedules').textContent = schedules.length;
     document.getElementById('stat-drivers').textContent = drivers.length;
 
-    // Recent Buses — semester ছাড়া
+
     const busesTbody = document.getElementById('dash-buses-tbody');
     busesTbody.innerHTML = buses.length === 0
       ? '<tr><td colspan="2" class="empty-row">No buses added yet</td></tr>'
@@ -94,7 +94,7 @@ async function updateStats() {
         `<tr><td>${b.busNumber}</td><td>${b.capacity}</td></tr>`
       ).join('');
 
-    // Recent Schedules
+
     const schedTbody = document.getElementById('dash-schedules-tbody');
     schedTbody.innerHTML = schedules.length === 0
       ? '<tr><td colspan="3" class="empty-row">No schedules added yet</td></tr>'
@@ -104,7 +104,7 @@ async function updateStats() {
   } catch (err) { console.error('Stats error:', err); }
 }
 
-// ========== BUSES ==========
+
 async function saveBus() {
   const editId = document.getElementById('bus-edit-id').value;
   const busNumber = document.getElementById('bus-number').value.trim();
@@ -187,7 +187,7 @@ function renderBuses(buses) {
 document.querySelector('[onclick="openModal(\'bus-modal\')"]')
   .addEventListener('click', clearBusForm);
 
-// ========== ROUTES ==========
+
 async function saveRoute() {
   const editId = document.getElementById('route-edit-id').value;
   const routeName = document.getElementById('route-name').value.trim();
@@ -265,7 +265,7 @@ function renderRoutes(routes) {
 document.querySelector('[onclick="openModal(\'route-modal\')"]')
   .addEventListener('click', clearRouteForm);
 
-// ========== SCHEDULES ==========
+
 async function saveSchedule() {
   const editId = document.getElementById('schedule-edit-id').value;
   const routeName = document.getElementById('schedule-route').value.trim();
@@ -324,7 +324,7 @@ function clearScheduleForm() {
   document.getElementById('schedule-modal-title').textContent = 'Add New Schedule';
   ['schedule-edit-id', 'schedule-route', 'schedule-time',
     'schedule-driver', 'schedule-bus'].forEach(id =>
-    document.getElementById(id).value = '');
+      document.getElementById(id).value = '');
 }
 
 function renderSchedules(schedules) {
@@ -352,13 +352,14 @@ function renderSchedules(schedules) {
 document.querySelector('[onclick="openModal(\'schedule-modal\')"]')
   .addEventListener('click', clearScheduleForm);
 
-// ========== DRIVERS ==========
+
 async function saveDriver() {
   const editId = document.getElementById('driver-edit-id').value;
   const driverName = document.getElementById('driver-name').value.trim();
   const busNumber = document.getElementById('driver-bus').value.trim();
-  if (!driverName || !busNumber) { showToast('Please fill in all fields.', true); return; }
-  const body = JSON.stringify({ driverName, busNumber });
+  const mobileNumber = document.getElementById('driver-mobile').value.trim();
+  if (!driverName || !busNumber || !mobileNumber) { showToast('Please fill in all fields.', true); return; }
+  const body = JSON.stringify({ driverName, busNumber, mobileNumber });
   try {
     if (editId) {
       await fetch(`${BASE_URL}/drivers/${editId}`, {
@@ -385,10 +386,11 @@ async function loadDrivers() {
   }
 }
 
-function editDriver(id, driverName, busNumber) {
+function editDriver(id, driverName, busNumber, mobileNumber) {
   document.getElementById('driver-modal-title').textContent = 'Edit Driver';
   document.getElementById('driver-edit-id').value = id;
   document.getElementById('driver-name').value = driverName;
+  document.getElementById('driver-mobile').value = mobileNumber || '';
   document.getElementById('driver-bus').value = busNumber;
   openModal('driver-modal');
 }
@@ -403,14 +405,14 @@ async function deleteDriver(id) {
 
 function clearDriverForm() {
   document.getElementById('driver-modal-title').textContent = 'Add New Driver';
-  ['driver-edit-id', 'driver-name', 'driver-bus'].forEach(id =>
+  ['driver-edit-id', 'driver-name', 'driver-bus', 'driver-mobile'].forEach(id =>
     document.getElementById(id).value = '');
 }
 
 function renderDrivers(drivers) {
   const tbody = document.getElementById('drivers-tbody');
   if (!drivers || drivers.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" class="empty-row">No drivers added yet</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-row">No drivers added yet</td></tr>';
     return;
   }
   tbody.innerHTML = drivers.map(d => `
@@ -418,11 +420,12 @@ function renderDrivers(drivers) {
       <td>${d.id}</td>
       <td>${d.driverName}</td>
       <td>${d.busNumber}</td>
+      <td>${d.mobileNumber || '—'}</td>
       <td>
         ${isAdmin
-      ? `<button class="btn-edit" onclick="editDriver(${d.id},'${d.driverName}','${d.busNumber}')">Edit</button>
-             <button class="btn-delete" onclick="deleteDriver(${d.id})">Delete</button>`
-      : '—'}
+        ? `<button class="btn-edit" onclick="editDriver(${d.id},'${d.driverName}','${d.busNumber}','${d.mobileNumber || ''}')">Edit</button>
+           <button class="btn-delete" onclick="deleteDriver(${d.id})">Delete</button>`
+        : '—'}
       </td>
     </tr>`).join('');
 }
@@ -430,7 +433,7 @@ function renderDrivers(drivers) {
 document.querySelector('[onclick="openModal(\'driver-modal\')"]')
   .addEventListener('click', clearDriverForm);
 
-// ========== INIT ==========
+
 function init() {
   loadBuses(); loadRoutes(); loadSchedules(); loadDrivers(); updateStats();
 }

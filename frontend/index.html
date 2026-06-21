@@ -123,7 +123,7 @@
 
   <main class="main-content">
 
-    
+
     <section id="tab-dashboard" class="tab-section active">
       <div class="stats-grid">
         <div class="stat-card">
@@ -182,7 +182,7 @@
       </div>
     </section>
 
-    
+
     <section id="tab-buses" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">Bus Management</h2>
@@ -206,7 +206,7 @@
       </table>
     </section>
 
-   
+
     <section id="tab-routes" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">Route Management</h2>
@@ -229,7 +229,7 @@
       </table>
     </section>
 
-    
+
     <section id="tab-schedules" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">Schedule Management</h2>
@@ -254,7 +254,7 @@
       </table>
     </section>
 
-    
+
     <section id="tab-drivers" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">Driver Management</h2>
@@ -266,12 +266,13 @@
             <th>ID</th>
             <th>Driver Name</th>
             <th>Assigned Bus</th>
+            <th>Mobile Number</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody id="drivers-tbody">
           <tr>
-            <td colspan="4" class="empty-row">No drivers added yet</td>
+            <td colspan="5" class="empty-row">No drivers added yet</td>
           </tr>
         </tbody>
       </table>
@@ -279,9 +280,9 @@
 
   </main>
 
-  
 
- 
+
+
   <div id="bus-modal" class="modal-overlay" style="display:none;">
     <div class="modal-box">
       <div class="modal-header">
@@ -307,7 +308,7 @@
     </div>
   </div>
 
-  
+
   <div id="route-modal" class="modal-overlay" style="display:none;">
     <div class="modal-box">
       <div class="modal-header">
@@ -332,7 +333,7 @@
     </div>
   </div>
 
-  
+
   <div id="schedule-modal" class="modal-overlay" style="display:none;">
     <div class="modal-box">
       <div class="modal-header">
@@ -365,7 +366,7 @@
     </div>
   </div>
 
- 
+
   <div id="driver-modal" class="modal-overlay" style="display:none;">
     <div class="modal-box">
       <div class="modal-header">
@@ -382,6 +383,10 @@
           <label>Assigned Bus</label>
           <input type="text" id="driver-bus" placeholder="e.g. CTG-1234" />
         </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="text" id="driver-mobile" placeholder="e.g. 01********0" />
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn-secondary" onclick="closeModal('driver-modal')">Cancel</button>
@@ -390,7 +395,7 @@
     </div>
   </div>
 
-  
+
   <div id="toast" class="toast"></div>
 
   <script src="script.js"></script>

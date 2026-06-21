@@ -37,6 +37,7 @@ public class DriverService {
             return null;
         existing.setDriverName(updated.getDriverName());
         existing.setBusNumber(updated.getBusNumber());
+        existing.setMobileNumber(updated.getMobileNumber()); 
         return existing;
     }
 

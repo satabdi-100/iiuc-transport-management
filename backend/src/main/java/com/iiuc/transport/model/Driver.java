@@ -5,6 +5,7 @@ public class Driver {
     private Long id;
     private String driverName;
     private String busNumber;
+    private String mobileNumber;
 
     public Driver() {
     }
@@ -37,5 +38,13 @@ public class Driver {
 
     public void setBusNumber(String busNumber) {
         this.busNumber = busNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }
